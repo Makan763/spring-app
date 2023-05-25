@@ -1,0 +1,43 @@
+version: '3'
+services:
+  db_host:
+    container_name: db_host
+    image: mysql:5.7
+    restart: always
+    environment:
+     MYSQL_ROOT_PASSWORD: 123456
+     MYSQL_DATABASE: geststudent
+     MYSQL_USER: makan
+     MYSQL_PASSWORD: 123456
+    ports:
+    - "3307:3306"
+    volumes:
+      - ./mysql/db_host:/var/lib/mysql
+    networks:
+      - monnet
+  spring:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: spring-container1
+    restart: always
+    depends_on:
+      - db_host
+    ports:
+      - "9393:8080"
+    networks:
+      - monnet
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana/grafana-data:/var/lib/grafana/grafana-datase
+      - ./grafana/defaults.ini:/usr/share/grafana/conf/defaults.ini
+    networks:
+      - monnet
+networks:
+  monnet:
+    driver: bridge

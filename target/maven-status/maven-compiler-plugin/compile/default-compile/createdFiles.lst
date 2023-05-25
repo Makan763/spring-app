@@ -1,0 +1,5 @@
+com\student\crud\example\entity\Student.class
+com\student\crud\example\repository\StudentRepository.class
+com\student\crud\example\Application.class
+com\student\crud\example\controller\StudentController.class
+com\student\crud\example\service\StudentService.class
